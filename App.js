@@ -677,7 +677,11 @@ function GameScreen({ route }) {
   }
 
   const pages = players.map((player, i) => {
-    return <PlayerScreen key={i} playerIndex={i + 1} player={player} />;
+    if (i + 1 === playerIndex) {
+      return <MyPlayerScreen key={i} playerIndex={i + 1} player={player} />;
+    } else {
+      return <PlayerScreen key={i} playerIndex={i + 1} player={player} />;
+    }
   });
 
   return (
@@ -892,6 +896,187 @@ function PlayerScreen({ playerIndex, player, currentPage }) {
   );
 }
 
+function MyPlayerScreen({ playerIndex, player, currentPage }) {
+  const [showBoxInfo, setShowBoxInfo] = useState({
+    bio: true,
+    health: true,
+    hobby: true,
+    phobia: true,
+    temper: true,
+    additionalInfo: true,
+    knowledge: true,
+    bag: true,
+    actionCard: true,
+    conditionCard: true,
+  });
+
+  const [boxClickCount, setBoxClickCount] = useState(0);
+  const [bordColor, setBordColor] = useState('white');
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
+  return (   
+    
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <ScrollView contentContainerStyle={gameScreenStyles.scrollContainer}>
+        <View style={gameScreenStyles.container}>
+          <Text style={gameScreenStyles.title}>Player #{playerIndex}</Text>
+          <View style={gameScreenStyles.box}>
+
+            <Text style={gameScreenStyles.boxTitle}>{player.profession}</Text>
+            <Text style={gameScreenStyles.boxText}>BIO: </Text>
+            <View style={[gameScreenStyles.boxInfo, { backgroundColor: '#fce090', borderColor: bordColor}]}>
+            {boxClickCount === 0 ? (
+              <TouchableOpacity
+                style={gameScreenStyles.boxInfoTouch}
+                onPress={() => {
+                  setBoxClickCount(1);
+                }}
+              >
+                 <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={gameScreenStyles.boxInfo}
+                onPress={() => {
+                  setBordColor('white');
+                }}
+              >
+              <Text style={gameScreenStyles.boxInfoText}>{player.bio}</Text>
+              </TouchableOpacity>
+            )}
+
+
+            </View>
+            <Text style={gameScreenStyles.boxText}>Health: </Text>
+            <View style={[gameScreenStyles.boxInfo, { backgroundColor: '#acf2a0' }]}>
+            {playerIndex === currentPage || showBoxInfo.health ? (
+                <Text style={gameScreenStyles.boxInfoText}>{player.health}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouch}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, health: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Hobby: </Text>
+            <View style={[gameScreenStyles.boxInfo, { backgroundColor: '#fab6fa' }]}>
+              {playerIndex === currentPage || showBoxInfo.hobby ? (
+                <Text style={gameScreenStyles.boxInfoText}>{player.hobby}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouch}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, hobby: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Phobia: </Text>
+            <View style={[gameScreenStyles.boxInfo, { backgroundColor: '#f57f7d' }]}>
+              {playerIndex === currentPage || showBoxInfo.phobia ? (
+                <Text style={gameScreenStyles.boxInfoText}>{player.phobia}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouch}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, phobia: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Temper: </Text>
+            <View style={[gameScreenStyles.boxInfo, { backgroundColor: '#e0b887' }]}>
+              {playerIndex === currentPage || showBoxInfo.temper ? (
+                <Text style={gameScreenStyles.boxInfoText}>{player.temper}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouch}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, temper: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Additional Information: </Text>
+            <View style={[gameScreenStyles.boxInfo, { backgroundColor: '#feb4ba' }]}>
+              {playerIndex === currentPage || showBoxInfo.additionalInfo ? (
+                <Text style={gameScreenStyles.boxInfoText}>{player.additionalInfo}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouch}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, additionalInfo: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Knowledge: </Text>
+            <View style={[gameScreenStyles.boxInfo, { backgroundColor: '#b4edfe' }]}>
+              {playerIndex === currentPage || showBoxInfo.knowledge ? (
+                <Text style={gameScreenStyles.boxInfoText}>{player.knowledge}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouch}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, knowledge: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Bag: </Text>
+            <View style={[gameScreenStyles.boxInfo, { backgroundColor: '#a3a4c4' }]}>
+              {playerIndex === currentPage || showBoxInfo.bag ? (
+                <Text style={gameScreenStyles.boxInfoText}>{player.bag}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouch}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, bag: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Action Card: </Text>
+            <View style={[gameScreenStyles.boxCard, { borderColor: '#484a8c' }]}>
+              {playerIndex === currentPage || showBoxInfo.actionCard ? (
+                <Text style={gameScreenStyles.boxCardText}>{player.actionCard}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouchCard}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, actionCard: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Condition Card: </Text>
+            <View style={[gameScreenStyles.boxCard, { borderColor: '#99454currentPage' }]}>
+              {playerIndex === currentPage || showBoxInfo.conditionCard ? (
+                <Text style={gameScreenStyles.boxCardText}>{player.conditionCard}</Text>
+              ) : (
+                <TouchableOpacity
+                  style={gameScreenStyles.boxInfoTouchCard}
+                  onPress={() => setShowBoxInfo({ ...showBoxInfo, conditionCard: true })}
+                >
+                  <Text style={gameScreenStyles.boxInfoTouchText}>Tap to view</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <Text style={gameScreenStyles.boxText}>Note: </Text>
+            <TextInput
+              style={gameScreenStyles.input}
+              placeholder="Note"
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </TouchableWithoutFeedback>
+  );
+}
 
 /**
  * ACTUAL GAME  SCREEN STYLE
